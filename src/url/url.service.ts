@@ -13,7 +13,7 @@ export class UrlService {
    */
   async shortenUrl(originalUrl: string): Promise<Url> {
     // Check if the URL already exists
-    const existingUrl = await this.getShortURL(originalUrl)
+    const existingUrl = await this.resolveShortUrl(originalUrl)
     if (existingUrl) {
       return existingUrl
     }
@@ -28,13 +28,6 @@ export class UrlService {
       createdAt: new Date(),
     })
     return await newUrl.save()
-  }
-
-  /**
-   * Retrieves a URL document based on its original URL.
-   */
-  private async getShortURL(originalUrl: string): Promise<null | Url> {
-    return await this.urlModel.findOne({ originalUrl }).exec()
   }
 
   /**
